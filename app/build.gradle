@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.thus.redditpost'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.thus.redditpost"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.7'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:$androidx_version"
+    implementation "androidx.activity:activity-compose:$activity_compose"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.compose.material3:material3:$material_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-compose:$navigation_version"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    //koin
+    implementation "io.insert-koin:koin-core:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_android_version"
+    implementation "io.insert-koin:koin-core-ext:$koin_version"
+
+    //retrofit
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor")
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    androidTestImplementation "androidx.test.ext:junit:$test_ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_test"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_test"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_test"
+
+    testImplementation "io.mockk:mockk:$mockk_android"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit5_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
+    testImplementation "org.junit.vintage:junit-vintage-engine:$junit5_version"
+
+    androidTestImplementation "io.mockk:mockk-android:$mockk_android"
+
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    implementation "androidx.compose.material:material:$compose_material"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+}
