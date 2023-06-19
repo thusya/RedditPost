@@ -2,6 +2,8 @@ package com.thus.redditpost.di
 
 import com.thus.redditpost.BuildConfig
 import com.thus.redditpost.data.network.ApiService
+import com.thus.redditpost.data.repository.PostsRepositoryImpl
+import com.thus.redditpost.domain.PostsRepository
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -17,4 +19,6 @@ val appModules = module {
             .build()
             .create(ApiService::class.java)
     }
+
+    factory<PostsRepository> { PostsRepositoryImpl(get()) }
 }
