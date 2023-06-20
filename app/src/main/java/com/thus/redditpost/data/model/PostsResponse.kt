@@ -11,41 +11,21 @@ data class PostsResponse(
     val postData: PostsData? = null
 )
 
-fun PostsResponse.toPostsInfoList(): List<PostsInfo> {
-    val postsInfoList: MutableList<PostsInfo> = mutableListOf()
+fun PostsResponse.toPostsInfoList(): List<PostsInfo> =
+    postData?.children?.mapNotNull { children ->
+        children.childrenData?.toPostsInfo(postData.after)
+    }.orEmpty()
 
-    val childrenList = postData?.children
-
-    childrenList?.map { children ->
-        val childrenData = children.childrenData
-
-        childrenData?.let { data ->
-            val linkFlairText = data.link_flair_text.orEmpty()
-            val title = data.title.orEmpty()
-            val domain = data.domain.orEmpty()
-            val author = data.author.orEmpty()
-            val thumbnail = data.thumbnail.orEmpty()
-            val urlOverriddenByDest = data.url_overridden_by_dest.orEmpty()
-            val created = data.created ?: 0.0
-            val ups = data.ups ?: 0
-            val numComments = data.num_comments ?: 0
-
-            val postsInfo = PostsInfo(
-                linkFlairText = linkFlairText,
-                title = title,
-                domain = domain,
-                author = author,
-                thumbnail = thumbnail,
-                urlOverriddenByDest = urlOverriddenByDest,
-                created = created,
-                ups = ups,
-                num_comments = numComments,
-                after = postData?.after.orEmpty()
-            )
-
-            postsInfoList.add(postsInfo)
-        }
-    }
-
-    return postsInfoList
-}
+fun ChildrenData.toPostsInfo(after: String?): PostsInfo =
+    PostsInfo(
+        linkFlairText = link_flair_text.orEmpty(),
+        title = title.orEmpty(),
+        domain = domain.orEmpty(),
+        author = author.orEmpty(),
+        thumbnail = thumbnail.orEmpty(),
+        urlOverriddenByDest = url_overridden_by_dest.orEmpty(),
+        created = created ?: 0.0,
+        ups = ups ?: 0,
+        num_comments = num_comments ?: 0,
+        after = after.orEmpty()
+    )
