@@ -10,7 +10,7 @@ data class PostsData(
     val dist: Int? = null,
 
     @field:Json(name = "modhash")
-    val modhash: Int? = null,
+    val modhash: String? = null,
 
     @field:Json(name = "geo_filter")
     val geo_filter: Any? = null,
