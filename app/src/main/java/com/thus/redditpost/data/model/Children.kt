@@ -7,5 +7,5 @@ data class Children(
         val kind: String? = null,
 
         @field:Json(name = "data")
-        val childrenData: List<ChildrenData>? = null
+        val childrenData: ChildrenData? = null
 )
