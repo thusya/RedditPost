@@ -1,10 +1,10 @@
 package com.thus.redditpost.domain
 
-import com.thus.redditpost.data.model.PostsResponse
+import com.thus.redditpost.domain.model.PostsInfo
 
 interface PostsRepository {
     suspend fun getPosts(
         limit: Int,
         page: String
-    ): PostsResponse
+    ): List<PostsInfo>
 }

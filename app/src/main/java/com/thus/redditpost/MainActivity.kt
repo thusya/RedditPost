@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         is PostsState.Normal -> {
-                            val response = state.showInfo.postData
+                            val response = state.showInfoList
 
                             Log.d("test ", response.toString())
                         }
