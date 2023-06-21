@@ -12,6 +12,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.thus.redditpost.domain.model.PostsInfo
+import com.thus.redditpost.ui.util.DateTimeUtils
 
 @Composable
 fun AuthorWithPostedHour(postsInfo: PostsInfo) {
@@ -27,7 +28,7 @@ fun AuthorWithPostedHour(postsInfo: PostsInfo) {
 
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = postsInfo.created.toString(),
+            text = DateTimeUtils.getRelativeTime(postsInfo.created.toLong()),
             style = TextStyle(
                 color = Color.Gray
             ),

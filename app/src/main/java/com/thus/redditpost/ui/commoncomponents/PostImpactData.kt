@@ -7,10 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,10 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thus.redditpost.R
 import com.thus.redditpost.domain.model.PostsInfo
+import com.thus.redditpost.ui.util.Utils
 
 @Composable
 fun PostImpactData(
@@ -42,7 +40,7 @@ fun PostImpactData(
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
-                text = postsInfo.ups.toString(),
+                text = Utils.formatCount(postsInfo.ups),
                 style = TextStyle(
                     color = Color.Gray
                 )
@@ -61,9 +59,9 @@ fun PostImpactData(
                 contentDescription = "Comments",
                 contentScale = ContentScale.Inside,
             )
-            Spacer(modifier = Modifier.width(2.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = postsInfo.numComments.toString(),
+                text = Utils.formatCount(postsInfo.numComments),
                 style = TextStyle(
                     color = Color.Gray
                 )
