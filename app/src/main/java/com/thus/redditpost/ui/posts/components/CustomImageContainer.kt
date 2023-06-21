@@ -65,15 +65,6 @@ fun CustomImageContainer(
                     sizeImage = it.size
                 },
         )
-
-//        GlideImage(
-//            model = postsInfo.thumbnail,
-//            contentDescription = "Image",
-//            modifier = Modifier
-//                .padding(3.dp)
-//                .fillMaxSize(),
-//        )
-
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
