@@ -17,8 +17,7 @@ fun PostContentRow(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+            .fillMaxWidth()
     ) {
         CustomTitleWithChip(modifier, postsInfo)
         if (URLUtil.isValidUrl(postsInfo.thumbnail)) {

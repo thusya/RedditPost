@@ -1,7 +1,10 @@
 package com.thus.redditpost.ui.posts.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,15 +39,16 @@ fun CustomImageContainer(
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
 
     val shape = RoundedCornerShape(8.dp)
-    val height = 60.dp
 
     Box(
         modifier = Modifier
-            .height(height)
+            .height(60.dp)
             .width(110.dp)
-            .background(color = Transparent, shape = shape),
+            .background(
+                color = Transparent,
+                shape = shape
+            ),
         contentAlignment = Alignment.Center
-
     ) {
 
         AsyncImage(
@@ -54,24 +58,27 @@ fun CustomImageContainer(
                 .data(postsInfo.thumbnail)
                 .crossfade(true)
                 .build(),
-
             contentDescription = "",
             modifier = Modifier
-                .width(110.dp)
-                .height(60.dp)
-                .clip(RoundedCornerShape(8.dp))
-
+                .fillMaxSize()
+                .aspectRatio(16 / 9f)
+                .clip(shape)
                 .onGloballyPositioned {
                     sizeImage = it.size
                 },
         )
         Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .background(Color.Black.copy(alpha = 0.6f))
+                .background(
+                    Color.Black.copy(alpha = 0.6f),
+                    shape = RoundedCornerShape(
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                )
                 .fillMaxWidth()
+                .align(Alignment.BottomCenter)
         ) {
-
             Text(
                 text = postsInfo.domain,
                 color = Color.White,
@@ -82,5 +89,6 @@ fun CustomImageContainer(
                     .padding(vertical = 4.dp)
             )
         }
+
     }
 }

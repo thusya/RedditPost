@@ -24,9 +24,7 @@ fun CustomTitleWithChip(
 ) {
     Column(
         modifier = modifier.padding(
-            horizontal = 10.dp,
-            vertical = 6.dp
-        ),
+            horizontal = 10.dp),
         horizontalAlignment = Alignment.Start
     ) {
         Text(
