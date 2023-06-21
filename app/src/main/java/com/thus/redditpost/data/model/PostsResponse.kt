@@ -27,5 +27,6 @@ fun ChildrenData.toPostsInfo(after: String?): PostsInfo =
         created = created ?: 0.0,
         ups = ups ?: 0,
         numComments = num_comments ?: 0,
-        after = after.orEmpty()
+        after = after.orEmpty(),
+        subredditNamePrefixed = subreddit_name_prefixed.orEmpty()
     )

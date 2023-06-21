@@ -8,12 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.thus.redditpost.domain.model.PostsInfo
 import com.thus.redditpost.ui.commoncomponents.CustomTitleWithChip
+import com.thus.redditpost.ui.util.WebUtil
 
 
 @Composable
 fun PostContentRow(
     modifier: Modifier,
-    postsInfo: PostsInfo
+    postsInfo: PostsInfo,
+    webUtil: WebUtil
 ) {
     Row(
         modifier = Modifier
@@ -21,7 +23,7 @@ fun PostContentRow(
     ) {
         CustomTitleWithChip(modifier, postsInfo)
         if (URLUtil.isValidUrl(postsInfo.thumbnail)) {
-            CustomImageContainer(postsInfo)
+            CustomImageContainer(postsInfo, webUtil)
         }
     }
 }

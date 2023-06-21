@@ -21,15 +21,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.thus.redditpost.R
 import com.thus.redditpost.domain.model.PostsInfo
+import com.thus.redditpost.ui.util.WebUtil
 
 @Composable
-fun CustomImageWithOverlay(postsInfo: PostsInfo) {
+fun CustomImageWithOverlay(postsInfo: PostsInfo, webUtil: WebUtil) {
+
+    val context = LocalContext.current
+
     Box(modifier = Modifier.fillMaxWidth()) {
         // Display the image
         AsyncImage(
@@ -68,11 +71,16 @@ fun CustomImageWithOverlay(postsInfo: PostsInfo) {
                             style = TextStyle(textAlign = TextAlign.Center),
                         )
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                webUtil.launchCustomTab(
+                                    context = context,
+                                    url = postsInfo.urlOverriddenByDest
+                                )
+                            },
                             modifier = Modifier
                                 .minimumInteractiveComponentSize()
                                 .size(24.dp)
-                            ) {
+                        ) {
                             Icon(
                                 painterResource(id = R.drawable.open_in_new_24),
                                 contentDescription = "Open Link in Web",
@@ -84,23 +92,4 @@ fun CustomImageWithOverlay(postsInfo: PostsInfo) {
             }
         )
     }
-}
-
-@Preview
-@Composable
-fun Preview() {
-    CustomImageWithOverlay(
-        PostsInfo(
-            linkFlairText = "Energy",
-            title = "Texas power use to break records in heat wave, prices soar to $2,500 per megawatt hour - ERCOT",
-            domain = "reuters.com",
-            author = "geoxol",
-            thumbnail = "https://b.thumbs.redditmedia.com/G7L1PA5rcMbK1fK1cg36LcHMiHt69NlkUX-gY11SFTU.jpg",
-            urlOverriddenByDest = "https://www.reuters.com/world/us/texas-power-use-break-records-heat-wave-prices-soar-ercot-2023-06-20/",
-            created = 1.68727451E9,
-            ups = 1221,
-            numComments = 375,
-            after = "t3_14eazna"
-        )
-    )
 }

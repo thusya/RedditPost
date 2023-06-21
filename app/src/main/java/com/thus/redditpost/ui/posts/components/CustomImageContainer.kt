@@ -30,15 +30,17 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.thus.redditpost.domain.model.PostsInfo
+import com.thus.redditpost.ui.util.WebUtil
 
 @Composable
 fun CustomImageContainer(
-    postsInfo: PostsInfo
+    postsInfo: PostsInfo, webUtil: WebUtil
 ) {
 
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
 
     val shape = RoundedCornerShape(8.dp)
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -52,9 +54,7 @@ fun CustomImageContainer(
     ) {
 
         AsyncImage(
-            model = ImageRequest.Builder(
-                LocalContext.current
-            )
+            model = ImageRequest.Builder(context)
                 .data(postsInfo.thumbnail)
                 .crossfade(true)
                 .build(),
@@ -69,6 +69,12 @@ fun CustomImageContainer(
         )
         Box(
             modifier = Modifier
+                .clickable {
+                    webUtil.launchCustomTab(
+                        context,
+                        postsInfo.urlOverriddenByDest
+                    )
+                }
                 .background(
                     Color.Black.copy(alpha = 0.6f),
                     shape = RoundedCornerShape(

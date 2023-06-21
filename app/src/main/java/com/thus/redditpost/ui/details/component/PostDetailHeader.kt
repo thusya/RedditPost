@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.thus.redditpost.domain.model.PostsInfo
 import com.thus.redditpost.ui.commoncomponents.AuthorWithPostedHour
+import com.thus.redditpost.ui.util.TECHNOLOGY_URL
 
 @Composable
 fun PostDetailHeader(
@@ -37,7 +38,7 @@ fun PostDetailHeader(
             model = ImageRequest.Builder(
                 LocalContext.current
             )
-                .data("https://b.thumbs.redditmedia.com/J_fCwTYJkoM-way-eaOHv8AOHoF_jNXNqOvPrQ7bINY.png")
+                .data(TECHNOLOGY_URL)
                 .crossfade(true).build(),
             contentDescription = "",
             modifier = Modifier
@@ -48,7 +49,7 @@ fun PostDetailHeader(
         Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
-                text = "r/technology", style = TextStyle(
+                text = postsInfo.subredditNamePrefixed, style = TextStyle(
                     color = Color.DarkGray
                 )
             )

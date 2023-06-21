@@ -5,6 +5,7 @@ import com.thus.redditpost.data.network.ApiService
 import com.thus.redditpost.data.repository.PostsRepositoryImpl
 import com.thus.redditpost.domain.PostsRepository
 import com.thus.redditpost.ui.posts.PostsViewModel
+import com.thus.redditpost.ui.util.WebUtil
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +24,7 @@ val appModules = module {
     }
 
     factory<PostsRepository> { PostsRepositoryImpl(get()) }
+    single { WebUtil() }
 
     viewModel { PostsViewModel(get()) }
 }

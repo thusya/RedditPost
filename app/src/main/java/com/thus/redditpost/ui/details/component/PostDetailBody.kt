@@ -9,15 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.thus.redditpost.domain.model.PostsInfo
 import com.thus.redditpost.ui.commoncomponents.CustomImageWithOverlay
+import com.thus.redditpost.ui.util.WebUtil
 
 @Composable
-fun PostDetailBody(postsInfo: PostsInfo) {
+fun PostDetailBody(postsInfo: PostsInfo, webUtil: WebUtil) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CustomImageWithOverlay(postsInfo)
+        CustomImageWithOverlay(postsInfo, webUtil)
     }
 }

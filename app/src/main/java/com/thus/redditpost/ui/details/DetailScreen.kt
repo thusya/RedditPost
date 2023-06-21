@@ -24,10 +24,15 @@ import com.thus.redditpost.ui.details.component.PostDetailBody
 import com.thus.redditpost.ui.details.component.PostDetailHeader
 import com.thus.redditpost.ui.details.component.PostDetailTitle
 import com.thus.redditpost.ui.posts.PostsViewModel
+import com.thus.redditpost.ui.util.WebUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(navController: NavController, viewModel: PostsViewModel) {
+fun DetailScreen(
+    navController: NavController,
+    viewModel: PostsViewModel,
+    webUtil: WebUtil
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,7 +62,7 @@ fun DetailScreen(navController: NavController, viewModel: PostsViewModel) {
                 PostDetailHeader(postsInfo)
                 PostDetailTitle(postsInfo)
                 if (URLUtil.isValidUrl(postsInfo.thumbnail)) {
-                    PostDetailBody(postsInfo)
+                    PostDetailBody(postsInfo, webUtil)
                 }
                 PostImpactData(postsInfo)
             }

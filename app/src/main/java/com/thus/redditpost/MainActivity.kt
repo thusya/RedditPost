@@ -15,11 +15,14 @@ import com.thus.redditpost.ui.navigation.NavigationScreen
 import com.thus.redditpost.ui.posts.PostsScreen
 import com.thus.redditpost.ui.posts.PostsViewModel
 import com.thus.redditpost.ui.theme.RedditPostTheme
+import com.thus.redditpost.ui.util.WebUtil
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
     private val viewModel: PostsViewModel by viewModel()
+    private val webUtil: WebUtil by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -37,10 +40,10 @@ class MainActivity : ComponentActivity() {
                         startDestination = NavigationScreen.POSTS_SCREEN.name
                     ) {
                         composable(NavigationScreen.POSTS_SCREEN.name) {
-                            PostsScreen(navController, viewModel)
+                            PostsScreen(navController, viewModel, webUtil)
                         }
                         composable(NavigationScreen.POSTS_DETAILS_SCREEN.name) {
-                            DetailScreen(navController, viewModel)
+                            DetailScreen(navController, viewModel, webUtil)
                         }
                     }
                 }

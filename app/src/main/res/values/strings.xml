@@ -6,4 +6,6 @@
     <string name="text_retry">Retry</string>
     <string name="screen_name_posts">Posts</string>
     <string name="screen_name_post_detail">Post Details</string>
+    <string name="choose_your_browser">Choose browser</string>
+    <string name="no_browser_found">Browser not installed</string>
 </resources>

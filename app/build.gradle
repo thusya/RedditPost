@@ -102,4 +102,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
     implementation "io.coil-kt:coil-compose:$coil_compose"
+
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
 }

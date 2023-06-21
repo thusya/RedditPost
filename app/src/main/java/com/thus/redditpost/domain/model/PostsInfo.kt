@@ -10,5 +10,6 @@ data class PostsInfo(
     val created: Double = 0.0,
     val ups: Int = 0,
     val numComments: Int = 0,
-    val after: String = ""
+    val after: String = "",
+    val subredditNamePrefixed: String = ""
 )

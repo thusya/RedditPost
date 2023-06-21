@@ -32,10 +32,11 @@ import com.thus.redditpost.ui.commonscreens.LoadingScreen
 import com.thus.redditpost.ui.navigation.NavigationScreen
 import com.thus.redditpost.ui.posts.components.PostContentRow
 import com.thus.redditpost.ui.posts.components.PostOwnerDetailRow
+import com.thus.redditpost.ui.util.WebUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostsScreen(navController: NavController, viewModel: PostsViewModel) {
+fun PostsScreen(navController: NavController, viewModel: PostsViewModel, webUtil: WebUtil) {
 
     Scaffold(
         topBar = {
@@ -67,7 +68,8 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel) {
             is PostsState.Normal -> {
                 PostsList(
                     paddingValues = paddingValues,
-                    postInfoList = state.showInfoList
+                    postInfoList = state.showInfoList,
+                    webUtil = webUtil
                 ) { postInfo ->
                     viewModel.postDetailSelected = postInfo
                     navController.navigate(NavigationScreen.POSTS_DETAILS_SCREEN.name)
@@ -82,6 +84,7 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel) {
 fun PostsList(
     paddingValues: PaddingValues,
     postInfoList: List<PostsInfo>,
+    webUtil: WebUtil,
     onItemClick: (PostsInfo) -> Unit
 ) {
     LazyColumn(
@@ -90,7 +93,7 @@ fun PostsList(
             .padding(paddingValues),
     ) {
         items(postInfoList) { post ->
-            PostsListItem(postInfo = post) {
+            PostsListItem(postInfo = post, webUtil = webUtil) {
                 onItemClick(post)
             }
         }
@@ -98,7 +101,7 @@ fun PostsList(
 }
 
 @Composable
-fun PostsListItem(postInfo: PostsInfo, onItemClick: () -> Unit) {
+fun PostsListItem(postInfo: PostsInfo, webUtil: WebUtil, onItemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(
@@ -130,7 +133,7 @@ fun PostsListItem(postInfo: PostsInfo, onItemClick: () -> Unit) {
             PostOwnerDetailRow(postInfo)
 
             // Row 2
-            PostContentRow(columModifier, postInfo)
+            PostContentRow(columModifier, postInfo, webUtil)
 
             //Row 3
             PostImpactData(postInfo)
