@@ -26,6 +26,6 @@ fun ChildrenData.toPostsInfo(after: String?): PostsInfo =
         urlOverriddenByDest = url_overridden_by_dest.orEmpty(),
         created = created ?: 0.0,
         ups = ups ?: 0,
-        num_comments = num_comments ?: 0,
+        numComments = num_comments ?: 0,
         after = after.orEmpty()
     )

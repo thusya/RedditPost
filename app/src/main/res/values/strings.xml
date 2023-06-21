@@ -4,4 +4,5 @@
     <string name="text_no_data_available">No data available</string>
     <string name="text_an_error_occurred">An error occurred</string>
     <string name="text_retry">Retry</string>
+    <string name="screen_name_posts">Posts</string>
 </resources>

@@ -19,6 +19,7 @@ buildscript {
         espresso_version = "3.5.1"
         test_ext_junit = "1.1.5"
         junit_version = "4.13.2"
+        coil_compose = "2.4.0"
     }
 }
 
