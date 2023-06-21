@@ -29,6 +29,7 @@ import com.thus.redditpost.ui.commoncomponents.PostImpactData
 import com.thus.redditpost.ui.commonscreens.EmptyScreen
 import com.thus.redditpost.ui.commonscreens.ErrorScreen
 import com.thus.redditpost.ui.commonscreens.LoadingScreen
+import com.thus.redditpost.ui.navigation.NavigationScreen
 import com.thus.redditpost.ui.posts.components.PostContentRow
 import com.thus.redditpost.ui.posts.components.PostOwnerDetailRow
 
@@ -66,9 +67,12 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel) {
             is PostsState.Normal -> {
                 PostsList(
                     paddingValues = paddingValues,
-                    postInfoList = state.showInfoList,
-                    onItemClick = {}
-                )
+                    postInfoList = state.showInfoList
+                ) { postInfo ->
+                    viewModel.postDetailSelected = postInfo
+                    navController.navigate(NavigationScreen.POSTS_DETAILS_SCREEN.name)
+                }
+
             }
         }
     }
@@ -78,7 +82,7 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel) {
 fun PostsList(
     paddingValues: PaddingValues,
     postInfoList: List<PostsInfo>,
-    onItemClick: () -> Unit
+    onItemClick: (PostsInfo) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -87,6 +91,7 @@ fun PostsList(
     ) {
         items(postInfoList) { post ->
             PostsListItem(postInfo = post) {
+                onItemClick(post)
             }
         }
     }
@@ -119,7 +124,7 @@ fun PostsListItem(postInfo: PostsInfo, onItemClick: () -> Unit) {
                         0.1f
                     )
                 )
-                .clickable {}
+                .clickable(onClick = onItemClick)
         ) {
             // Row 1
             PostOwnerDetailRow(postInfo)

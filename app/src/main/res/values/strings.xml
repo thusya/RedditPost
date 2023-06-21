@@ -5,4 +5,5 @@
     <string name="text_an_error_occurred">An error occurred</string>
     <string name="text_retry">Retry</string>
     <string name="screen_name_posts">Posts</string>
+    <string name="screen_name_post_detail">Post Details</string>
 </resources>

@@ -6,13 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.thus.redditpost.ui.details.DetailScreen
 import com.thus.redditpost.ui.navigation.NavigationScreen
 import com.thus.redditpost.ui.posts.PostsScreen
 import com.thus.redditpost.ui.posts.PostsViewModel
@@ -40,6 +38,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(NavigationScreen.POSTS_SCREEN.name) {
                             PostsScreen(navController, viewModel)
+                        }
+                        composable(NavigationScreen.POSTS_DETAILS_SCREEN.name) {
+                            DetailScreen(navController, viewModel)
                         }
                     }
                 }

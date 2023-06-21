@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thus.redditpost.domain.PostsRepository
+import com.thus.redditpost.domain.model.PostsInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -13,6 +14,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) : ViewModel()
 
     val postsState = mutableStateOf<PostsState>(PostsState.Loading)
 
+    var postDetailSelected: PostsInfo? = null
     init {
         fetchPosts()
     }
