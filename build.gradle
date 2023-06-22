@@ -20,6 +20,9 @@ buildscript {
         test_ext_junit = "1.1.5"
         junit_version = "4.13.2"
         coil_compose = "2.4.0"
+        twa_version = "2.5.0"
+        room_version = "2.5.1"
+        paging_version = "3.1.1"
     }
 }
 

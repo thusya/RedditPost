@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.thus.redditpost.R
 
 @Composable
-fun ErrorScreen(onRetryClick: () -> Unit) {
+fun ErrorScreen(throwable: Throwable, onRetryClick: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

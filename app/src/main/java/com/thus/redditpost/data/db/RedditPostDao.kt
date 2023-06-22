@@ -13,9 +13,9 @@ interface RedditPostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<RedditPost>)
 
-    @Query("SELECT * FROM RedditPost")
-    fun getPostsLocalSource(): PagingSource<Int, RedditPost>
+    @Query("SELECT * FROM reddit_post")
+    fun getPostsFromLocalSource(): PagingSource<Int, RedditPost>
 
-    @Query("DELETE FROM RedditPost")
+    @Query("DELETE FROM reddit_post")
     suspend fun deleteAll()
 }

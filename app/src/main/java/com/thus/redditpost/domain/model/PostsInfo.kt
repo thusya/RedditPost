@@ -1,6 +1,7 @@
 package com.thus.redditpost.domain.model
 
 data class PostsInfo(
+    val id: Int = 0,
     val linkFlairText: String = "",
     val title: String = "",
     val domain: String = "",
