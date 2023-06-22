@@ -17,6 +17,12 @@ jobs:
           key: $[{ runner.os }]-gradle-$[{ hashFile('**/*.gradle*') }]
           restore-key: |
             $[{ runner.os }]-gradle-
+            
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.10.0
+        with:
+          distribution: 'temurin'
+          java-version: 17
         
       - name: Unit Test
         run: ./gradlew testDebugUnitTest
