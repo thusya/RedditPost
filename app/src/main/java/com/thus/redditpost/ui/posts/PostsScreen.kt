@@ -9,20 +9,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.thus.redditpost.R
 import com.thus.redditpost.domain.model.PostsInfo
 import com.thus.redditpost.ui.commoncomponents.PostImpactData
@@ -36,7 +43,11 @@ import com.thus.redditpost.ui.util.WebUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostsScreen(navController: NavController, viewModel: PostsViewModel, webUtil: WebUtil) {
+fun PostsScreen(
+    navController: NavController,
+    viewModel: PostsViewModel,
+    webUtil: WebUtil
+) {
 
     Scaffold(
         topBar = {
@@ -50,32 +61,13 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel, webUtil
             )
         }
     ) { paddingValues ->
-        when (val state = viewModel.postsState.value) {
-            is PostsState.Loading -> {
-                LoadingScreen()
-            }
-
-            is PostsState.Empty -> {
-                EmptyScreen()
-            }
-
-            is PostsState.Error -> {
-                ErrorScreen {
-                    viewModel.fetchPosts()
-                }
-            }
-
-            is PostsState.Normal -> {
-                PostsList(
-                    paddingValues = paddingValues,
-                    postInfoList = state.showInfoList,
-                    webUtil = webUtil
-                ) { postInfo ->
-                    viewModel.postDetailSelected = postInfo
-                    navController.navigate(NavigationScreen.POSTS_DETAILS_SCREEN.name)
-                }
-
-            }
+        PostsList(
+            paddingValues = paddingValues,
+            lazyPagingItems = viewModel.posts.collectAsLazyPagingItems(),
+            webUtil = webUtil
+        ) { postInfo ->
+            viewModel.postDetailSelected = postInfo
+            navController.navigate(NavigationScreen.POSTS_DETAILS_SCREEN.name)
         }
     }
 }
@@ -83,7 +75,7 @@ fun PostsScreen(navController: NavController, viewModel: PostsViewModel, webUtil
 @Composable
 fun PostsList(
     paddingValues: PaddingValues,
-    postInfoList: List<PostsInfo>,
+    lazyPagingItems: LazyPagingItems<PostsInfo>,
     webUtil: WebUtil,
     onItemClick: (PostsInfo) -> Unit
 ) {
@@ -92,9 +84,69 @@ fun PostsList(
             .fillMaxSize()
             .padding(paddingValues),
     ) {
-        items(postInfoList) { post ->
-            PostsListItem(postInfo = post, webUtil = webUtil) {
-                onItemClick(post)
+        when (val loadState = lazyPagingItems.loadState.refresh) {
+            is LoadState.Loading -> {
+                item {
+                    LoadingScreen()
+                }
+            }
+
+            is LoadState.Error -> {
+                val error = loadState.error
+                item {
+                    ErrorScreen(error) {
+                        lazyPagingItems.retry()
+                    }
+                }
+            }
+
+            else -> {}
+        }
+
+        items(
+            count = lazyPagingItems.itemCount,
+            key = lazyPagingItems.itemKey { it.id },
+            contentType = lazyPagingItems.itemContentType { "contentType" }
+        ) { index ->
+            val post = lazyPagingItems[index]
+            if (post != null) {
+                PostsListItem(postInfo = post, webUtil = webUtil) {
+                    onItemClick(post)
+                }
+            } else {
+                PostsListItem(postInfo = PostsInfo(), webUtil = webUtil) { // Make placeholder here
+                }
+            }
+
+        }
+        lazyPagingItems.itemKey() { it.after }
+
+        when {
+            lazyPagingItems.loadState.refresh is LoadState.NotLoading &&
+                    lazyPagingItems.itemCount == 0 -> {
+                item {
+                    EmptyScreen()
+                }
+            }
+
+            lazyPagingItems.loadState.append is LoadState.Loading -> {
+                item {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                    )
+                }
+            }
+
+            lazyPagingItems.loadState.append is LoadState.Error -> {
+                (lazyPagingItems.loadState.append as? LoadState.Error)?.error?.let { error ->
+                    item {
+                        ErrorScreen(error) {
+                            lazyPagingItems.retry()
+                        }
+                    }
+                }
             }
         }
     }

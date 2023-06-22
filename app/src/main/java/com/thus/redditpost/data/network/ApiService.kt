@@ -9,6 +9,7 @@ interface ApiService {
     @GET("r/technology/hot.json")
     suspend fun getPosts(
         @Query("limit") limit: Int,
-        @Query("page") page: String
+        @Query("after") after: String? = null,
+        @Query("before") before: String? = null
     ): PostsResponse
 }

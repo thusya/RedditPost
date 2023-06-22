@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.thus.redditpost.domain.model.PostsInfo
 
-@Entity(tableName = "RedditPost")
+@Entity(tableName = "reddit_post")
 data class RedditPost(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
@@ -19,6 +19,21 @@ data class RedditPost(
     val numComments: Int = 0,
     val after: String = "",
     val subredditNamePrefixed: String = ""
+)
+
+fun RedditPost.toPostsInfo() = PostsInfo(
+    id = id ?: 0,
+    linkFlairText = linkFlairText,
+    title = title,
+    domain = domain,
+    author = author,
+    thumbnail = thumbnail,
+    urlOverriddenByDest = urlOverriddenByDest,
+    created = created,
+    ups = ups,
+    numComments = numComments,
+    after = after,
+    subredditNamePrefixed = subredditNamePrefixed,
 )
 
 fun PostsInfo.toRedditPost() = RedditPost(
@@ -50,5 +65,6 @@ fun ChildrenData.toPostsInfo(after: String): RedditPost =
         created = created ?: 0.0,
         ups = ups ?: 0,
         after = after,
+        numComments = num_comments ?: 0,
         subredditNamePrefixed = subreddit_name_prefixed.orEmpty()
     )
